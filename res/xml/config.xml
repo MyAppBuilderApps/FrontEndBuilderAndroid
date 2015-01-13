@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.nuatransmedia.FrontEndBuilder" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+      <preference name="Fullscreen" value="true" />
+      
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+    <feature name="Screenshot">
+        <param name="android-package" value="com.darktalker.cordova.screenshot.Screenshot" />
+    </feature>
+    <feature name="WizSpinnerPlugin">
+        <param name="android-package" value="jp.wizcorp.phonegap.plugin.wizSpinner.WizSpinnerPlugin" />
+    </feature>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
+    </feature>
+    <feature name="Compass">
+        <param name="android-package" value="org.apache.cordova.deviceorientation.CompassListener" />
+    </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+    </feature>
+     <feature name="Echo">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo" />
+    </feature> 
+     <feature name="Echo_Two">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Two" />
+    </feature> 
+     <feature name="Echo_Threes">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Threes" />
+    </feature> 
+    <feature name="Echo_Small">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Small" />
+    </feature>
+     <feature name="BaseWizard">
+        <param name="android-package" value="com.netcompss.ffmpeg4android_client.BaseWizard" />
+    </feature>
+    <feature name="Keyboard">
+        <param name="android-package" value="com.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature> 
+     <feature name="Echo_Audio">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Audio" />
+    </feature>
+       <feature name="Echo_Video">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Video" />
+    </feature>
+    
+     <feature name="Echo_Capture">
+        <param name="android-package" value="org.apache.cordova.plugin.Echo_Capture" />
+    </feature>
+    <name>FrontEndBuilder</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

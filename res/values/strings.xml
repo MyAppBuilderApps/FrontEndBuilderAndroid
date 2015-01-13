@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FrontEndBuilder</string>
+    <string name="gal">Gallery</string>
+    <string name="cap">Capture</string>
+    <string name="capture">Press capture, to take a snapshot from the video</string>
+    <string name="feb">Front End Builder</string>
+    
+</resources>
