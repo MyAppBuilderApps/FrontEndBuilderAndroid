@@ -5,7 +5,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
-import com.nuatransmedia.FrontEndBuilder.R;
+import com.nuatransmedia.FrontEndBuilder1.R;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -300,7 +300,7 @@ module.exports.metadata =
 {
     "com.darktalker.cordova.screenshot": "0.1.0",
     "jp.wizcorp.phonegap.plugin.wizSpinnerPlugin": "1.2.0",
-    "nl.x-services.plugins.socialsharing": "4.3.10",
+    "nl.x-services.plugins.socialsharing": "4.3.11",
     "org.apache.cordova.camera": "0.3.3",
     "org.apache.cordova.console": "0.2.11",
     "org.apache.cordova.device": "0.2.12",

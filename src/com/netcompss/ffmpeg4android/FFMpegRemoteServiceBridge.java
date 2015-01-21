@@ -5,7 +5,7 @@ import com.netcompss.ffmpeg4android.IFfmpgefRemoteServiceBridge;
 import com.netcompss.ffmpeg4android_client.Prefs;
 import com.netcompss.loader.LoadJNI;
 import com.netcompss.videokit.Videokit;
-import com.nua.New.New;
+import com.nuatransmedia.FrontEndBuilder1.FrontEndBuilder1;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -162,7 +162,7 @@ public class FFMpegRemoteServiceBridge extends Service {
 			else 
 				Log.w(Prefs.TAG, "notifIcon is not set reverting to default");
 			
-			Intent pintent = new Intent(getApplicationContext(), New.class);
+			Intent pintent = new Intent(getApplicationContext(), FrontEndBuilder1.class);
 			pintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			PendingIntent pendIntent = PendingIntent.getActivity(getApplicationContext(), 0, pintent, 0);
 

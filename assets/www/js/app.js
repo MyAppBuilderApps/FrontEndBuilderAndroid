@@ -1,15 +1,23 @@
- var control = angular.module('myappbuilder',['ionic', 'starter.controllers','ui.tinymce','ngCordova']);
-  
-    
- /* -----------------------------------------------------Login Page---------------------------------------------*/
-control.config(function($stateProvider, $urlRouterProvider) {
-	
+var app = angular.module('myappbuilder',['ionic', 'starter.controllers','ui.tinymce','checklist-model','ngCordova']);
+
+app.config(function($stateProvider,$urlRouterProvider){
+           
+           $stateProvider.state('editcontent', {
+                                url: '/editcontent',
+                                templateUrl: 'templates/editcontent.html',
+                                controller: 'editcontentCtrl'
+                                });
 
   $stateProvider.state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl'
-  });     
+  });   
+  $stateProvider.state('login1', {
+      url: '/login1',
+      templateUrl: 'templates/login1.html',
+      controller: 'login1Ctrl'
+  });    
   
   $stateProvider.state('register', {
       url: '/register',
@@ -43,6 +51,12 @@ control.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/app.html',
       controller: 'appCtrl'
   });
+  $stateProvider.state('app1', {
+      url: '/app1',
+      templateUrl: 'templates/app1.html',
+      controller: 'app1Ctrl'
+   });
+               
      $stateProvider.state('elements', {
       url: '/elements',
       templateUrl: 'templates/elements.html',
@@ -57,7 +71,13 @@ control.config(function($stateProvider, $urlRouterProvider) {
       url: '/chapterlist',
       templateUrl: 'templates/chapterlist.html',
       controller: 'chapterlistCtrl'
-  });   
+  });
+   $stateProvider.state('chapterlist1', {
+      url: '/chapterlist1',
+      templateUrl: 'templates/chapterlist1.html',
+       controller: 'chapterlist1Ctrl'
+   });
+               
    $stateProvider.state('newapp1', {
       url: '/newapp1',
       templateUrl: 'templates/newapp1.html',
@@ -128,7 +148,11 @@ control.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/rssedit.html',
       controller: 'rsseditCtrl'
   });
-  
+       $stateProvider.state('task', {
+      url: '/task',
+      templateUrl: 'templates/task.html',
+      controller: 'taskCtrl'
+  });
      $stateProvider.state('taskedit', {
       url: '/taskedit',
       templateUrl: 'templates/taskedit.html',
@@ -189,18 +213,34 @@ control.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/buttonAppWall.html',
       controller: 'buttonAppWallCtrl'
   });
+               $stateProvider.state('buttonAppWall1', {
+                                    url: '/buttonAppWall1',
+                                    templateUrl: 'templates/buttonAppWall1.html',
+                                    controller: 'buttonAppWall1Ctrl'
+                                    });
 
  $stateProvider.state('appWall', {
       url: '/appWall',
       templateUrl: 'templates/appWall.html',
       controller: 'appWallCtrl'
   });
+  $stateProvider.state('appWall1', {
+       url: '/appWall1',
+       templateUrl: 'templates/appWall1.html',
+        controller: 'appWall1Ctrl'
+       });
   
  $stateProvider.state('elementAppWall', {
       url: '/elementAppWall',
       templateUrl: 'templates/elementAppWall.html',
       controller: 'elementAppWallCtrl'
   });
+   $stateProvider.state('elementAppWall1', {
+       url: '/elementAppWall1',
+       templateUrl: 'templates/elementAppWall1.html',
+        controller: 'elementAppWall1Ctrl'
+    });
+               
     $stateProvider.state('videoedit', {
       url: '/videoedit',
       templateUrl: 'templates/videoedit.html',
@@ -246,70 +286,14 @@ control.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/previewaudio.html',
       controller: 'previewaudioCtrl'
   });
+
   $stateProvider.state('previewvideo', {
       url: '/previewvideo',
       templateUrl: 'templates/previewvideo.html',
       controller: 'previewvideoCtrl'
   });
-   $stateProvider.state('sublist', {
-      url: '/sublist',
-      templateUrl: 'templates/sublist.html',
-      controller: 'sublistCtrl'
-
-   });
- $stateProvider.state('home', {
-      url: '/home',
-      templateUrl: 'templates/home.html',
-      controller: 'homeCtrl'
-
-   });
-    $stateProvider.state('entries', {
-      url: '/entries',
-      templateUrl: 'templates/entries.html',
-      controller: 'entriesCtrl'
-
-   });
-    $stateProvider.state('entry', {
-       url: '/entry/:index',
-      templateUrl: 'templates/entry.html',
-      controller: 'entryCtrl'
-
-   });
-    $stateProvider.state('offline', {
-      url: '/offline',
-      templateUrl: 'templates/offline.html',
-      controller: 'offlineCtrl'
-
-   });
-    $stateProvider.state('showmap', {
-      url: '/showmap',
-      templateUrl: 'templates/showmap.html',
-      controller: 'showmapCtrl'
-
-   });
-    $stateProvider.state('viewdetails', {
-      url: '/viewdetails',
-      templateUrl: 'templates/viewdetails.html',
-      controller: 'viewdetailsCtrl'
-
-   });
-  $stateProvider.state('buttonAppWall1', {
-       url: '/buttonAppWall1',
-       templateUrl: 'templates/buttonAppWall1.html',
-       controller: 'buttonAppWall1Ctrl'
-  });
   
-   $stateProvider.state('appWall1', {
-       url: '/appWall1',
-       templateUrl: 'templates/appWall1.html',
-        controller: 'appWall1Ctrl'
-       });
-   $stateProvider.state('elementAppWall1', {
-       url: '/elementAppWall1',
-       templateUrl: 'templates/elementAppWall1.html',
-        controller: 'elementAppWall1Ctrl'
-    });
-     $stateProvider.state('sample1', {
+  $stateProvider.state('sample1', {
       url: '/sample1',
       templateUrl: 'templates/sample1.html',
        controller: 'sample1Ctrl'
@@ -354,8 +338,39 @@ control.config(function($stateProvider, $urlRouterProvider) {
                                     templateUrl: 'templates/previewvideo1.html',
                                     controller: 'previewvideo1Ctrl'
                                     });
-               $stateProvider.state('showmap1', {
-									url: '/showmap1',
+  $stateProvider.state('sublist', {
+      url: '/sublist',
+      templateUrl: 'templates/sublist.html',
+      controller: 'sublistCtrl'
+   });
+  $stateProvider.state('home', {
+        url: '/home',
+        controller: 'homeCtrl', 
+        templateUrl: 'templates/home.html'
+      })
+      $stateProvider.state('entries', {
+        url: '/entries', 
+        controller: 'entriesCtrl',
+        templateUrl: 'templates/entries.html',
+      })
+      $stateProvider.state('entry', {
+        url: '/entry/:index',
+        controller: 'entryCtrl',
+        templateUrl: 'templates/entry.html',
+      })
+      $stateProvider.state('offline', {
+        url: '/offline',
+                controller: 'offlineCtrl',
+        templateUrl: 'templates/offline.html'
+      });
+      $stateProvider.state('showmap', {
+            url: '/showmap',
+            templateUrl: 'templates/showmap.html',
+            controller: 'showmapCtrl'
+      });
+           
+      $stateProvider.state('showmap1', {
+            url: '/showmap1',
                                     templateUrl: 'templates/showmap1.html',
                                     controller: 'showmap1Ctrl'
                                     });
@@ -383,21 +398,17 @@ control.config(function($stateProvider, $urlRouterProvider) {
                                 controller: 'entry1Ctrl',
                                 templateUrl: 'templates/entry1.html',
                                 })
-  $stateProvider.state('app1', {
-      url: '/app1',
-      templateUrl: 'templates/app1.html',
-      controller: 'app1Ctrl'
-  });
-   $stateProvider.state('chapterlist1', {
-      url: '/chapterlist1',
-      templateUrl: 'templates/chapterlist1.html',
-      controller: 'chapterlist1Ctrl'
-  });
-  $stateProvider.state('newapp11', {
-      url: '/newapp11',
-      templateUrl: 'templates/newapp11.html',
-      controller: 'newapp11Ctrl'
-  }); 
+                                
+   $stateProvider.state('viewdetails', {
+      url: '/viewdetails',
+      templateUrl: 'templates/viewdetails.html',
+      controller: 'viewdetailsCtrl'
+   });
+    $stateProvider.state('viewdetails1', {
+      url: '/viewdetails1',
+      templateUrl: 'templates/viewdetails1.html',
+      controller: 'viewdetails1Ctrl'
+   });
    $stateProvider.state('app2', {
       url: '/app2',
       templateUrl: 'templates/app2.html',
@@ -526,15 +537,45 @@ control.config(function($stateProvider, $urlRouterProvider) {
       url: '/buttonlist2',
       templateUrl: 'templates/buttonlist2.html',
       controller: 'buttonlist2Ctrl'
-  });
+  }); 
    $stateProvider.state('editnewapp1', {
       url: '/editnewapp1',
       templateUrl: 'templates/editnewapp1.html',
       controller: 'editnewapp1Ctrl'
-  });                      
-    $urlRouterProvider.otherwise('/login');
+  }); 
+    $urlRouterProvider.otherwise('/editcontent');
 
 });
+
+app.filter('inSlicesOf',
+           ['$rootScope',
+            function($rootScope) {
+            makeSlices = function(items, count){
+            if (!count)
+            count = 3;
+            
+            if (!angular.isArray(items) && !angular.isString(items)) return items;
+            
+            var array = [];
+            for (var i = 0; i < items.length; i++) {
+            var chunkIndex = parseInt(i / count, 10);
+            var isFirst = (i % count === 0);
+            if (isFirst)
+            array[chunkIndex] = [];
+            array[chunkIndex].push(items[i]);
+            }
+            
+            if (angular.equals($rootScope.arrayinSliceOf, array))
+            return $rootScope.arrayinSliceOf;
+            else
+            $rootScope.arrayinSliceOf = array;
+            
+            return array;
+            };
+            
+            return makeSlices; 
+            }]
+           );
 
 
 window.addEventListener('native.keyboardshow', keyboardShowHandler);

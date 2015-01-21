@@ -20,14 +20,12 @@
 
    <div style="padding:20% 0% 0% 0%;">
       
-<p>
+     <p>
 	<button class="button-clear" onClick="sharePhoto2()"><img src="img/ic_fb.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto1()"><img src="img/ic_twitter.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto();"><img src="img/ic_mail1.png" alt="" style="width:32px;height:32px;"/></button>
 
 </p>
-
-
 		    <div class="item item-text-wrap" style="padding:4px 0px 4px 0px;">
 				<textarea style="height:30%;" ng-model="textCreatedis.distext" ui-tinymce="tinymceOptions" >{{description}}</textarea>        
 				<input type="file" id="imageSelect2" ng-hide="true" />
@@ -53,14 +51,14 @@
 			</div>   
 		  
 			<button class="button button-full" ng-class="button_color" ng-click="uploaddisplay();" >Upload</button>
-	  	  	
-			<br/>	
-		
-				<tags-input placeholder="Add a tag" ng-model="contenteditCreate.elementeditTag" ></tags-input>	
-				<button class="button button-full" ng-class="button_color" ng-click="ok();">Update</button>
-			<br/>
-			
-			
+	  
+      <br/>
+      
+      <tags-input placeholder="Add a tag" ng-model="contenteditCreate.elementeditTag" ></tags-input>
+      <button class="button button-full" ng-class="button_color" ng-click="ok();">Update</button>
+      <br/>
+      
+      
 			<div class="item item-divider">
 				Custom values
 			</div>

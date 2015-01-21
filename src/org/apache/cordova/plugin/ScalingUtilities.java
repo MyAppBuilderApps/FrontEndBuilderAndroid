@@ -37,7 +37,6 @@ public class ScalingUtilities {
 			int dstHeight, ScalingLogic scalingLogic) {
 		Options options = new Options();
 		options.inJustDecodeBounds = true;
-		
 		BitmapFactory.decodeResource(res, resId, options);
 		options.inJustDecodeBounds = false;
 		options.inSampleSize = calculateSampleSize(options.outWidth,

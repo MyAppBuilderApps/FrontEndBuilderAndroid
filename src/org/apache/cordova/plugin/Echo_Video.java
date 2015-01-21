@@ -11,16 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 public class Echo_Video extends CordovaPlugin {
-	
-	//bun.putString("img", "path");
-	//bun.putString("vid", "/sdcard/videokit/final.mp4");
-	//bun.putString("vid", "https://www.youtube.com/watch?v=6yjfWf6oZUs");
-	//bun.putString("vid", "http://video.webmfiles.org/big-buck-bunny_trailer.webm");
-	//bun.putString("vid", "http://download.itcuties.com/teaser/itcuties-teaser-480.mp4");
-	//bun.putString("vid", "http://techslides.com/demos/sample-videos/small.mp4");
-	//bun.putString("vid", "http://video.webmfiles.org/big-buck-bunny_trailer.webm");
-	//bun.putString("vid", "http://www.w3schools.com/html/mov_bbb.mp4");
-	//bun.putString("vid", "http://s3.amazonaws.com/iPhoneBooks/uploaded_videos/14349/final.mp4?1419233791");
 
 	public CallbackContext callbackContext1;
 	public Context context;
@@ -36,10 +26,8 @@ public class Echo_Video extends CordovaPlugin {
 			if (stng_img != null) {
 				Intent intent = new Intent(context, Video_Activity.class);
 				Bundle bun = new Bundle();
-				//bun.putString("img", "path");
+				//bun.putString("img", "url");
 				//bun.putString("vid", "/sdcard/videokit/final.mp4");
-				
-				//bun.putString("vid", "http://s3.amazonaws.com/iPhoneBooks/uploaded_videos/14349/final.mp4?1419233791");
 				bun.putString("img", "uri");
 				bun.putString("vid", stng_img);
 				intent.putExtras(bun);

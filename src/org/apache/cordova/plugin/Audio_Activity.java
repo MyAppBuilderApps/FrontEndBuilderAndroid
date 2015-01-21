@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import com.nuatransmedia.FrontEndBuilder.R;
+import com.nuatransmedia.FrontEndBuilder1.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

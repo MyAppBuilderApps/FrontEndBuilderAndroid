@@ -1,19 +1,21 @@
 <ion-view >
-   <ion-header-bar  class="bar bar-header bar-positive">
+    <div  class="bar bar-header bar-positive">
         
         <button class="button button-positive icon ion-ios7-arrow-back" ng-click="backpreventry();"></button>
         <h1 class="title" style="padding:0% 25% 0% 5%;">"{{entry.title}}"</h1>
         
-   </ion-header-bar>
+    </div>
 	<ion-content class="padding">
 
-<div style="margin-top:12%;">
-		 <p>
+<div style="margin-top:20%;">
+ <p>
 	<button class="button-clear" onClick="sharePhoto2()"><img src="img/ic_fb.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto1()"><img src="img/ic_twitter.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto();"><img src="img/ic_mail1.png" alt="" style="width:32px;height:32px;"/></button>
 
 </p>
+
+
 		<h2>{{entry.title}}</h2>
 		<p><b>Published:</b> {{entry.publishedDate}}</p>
 		

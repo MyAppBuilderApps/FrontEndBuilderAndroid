@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.nuatransmedia.FrontEndBuilder.R;
+import com.nuatransmedia.FrontEndBuilder1.R;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -41,6 +41,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 @SuppressLint("NewApi")

@@ -11,28 +11,27 @@
  </ion-header-bar>
 <br/>
   <div class="bar bar-subheader" style="margin-top:2%;">
-	  
- <div style="margin-left:5%;font-size:16px;" class="doubleline">
+	  <div style="margin-left:5%;font-size:16px;" class="doubleline">
 		   {{elementTitle}}
 	</div>
-	
   </div>
          
   <ion-content > 
 
    <div style="padding:20% 0% 0% 0%;">
-     
-<p>
+    
+    <p>
 	<button class="button-clear" onClick="sharePhoto2()"><img src="img/ic_fb.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto1()"><img src="img/ic_twitter.png" alt="" style="width:32px;height:32px;"/></button>
 	<button class="button-clear" onClick="sharePhoto();"><img src="img/ic_mail1.png" alt="" style="width:32px;height:32px;"/></button>
 
 </p>
-   
-		   <div class="item item-text-wrap" ng-bind-html="description" style="padding:8px 2px 10px 2px;">
+
+  
+		   <div class="item item-text-wrap" ng-bind-html="description" style="padding:8px 2px 8px 2px;">
 	        </div>    	
       
- <ul class="list" align="center">
+    <ul class="list" align="center">
  
 
             <ion-slide-box on-slide-changed="slideChanged(index)" style="padding:2% 0 0 0">
@@ -53,13 +52,15 @@
 
 
           <ul>
+    
   
-		<br/>
-			<label ng-repeat="tag in tags" >
-					<button class="button button-positive" style="margin-left:2%;" >{{tag}}</button>
-			</label>
-			
-			<br/>	<br/>
+  <br/>
+  <label ng-repeat="tag in tags" >
+      <button class="button button-positive" style="margin-left:2%;">{{tag}}</button>
+  </label>
+  
+  <br/><br/>
+  
 		<div class="card">
 			
 			<div class="item item-divider">
@@ -73,9 +74,13 @@
                     </div>						 
 	           </li>   
             </ul>
+            
+		
        </div>
-       
 	</div>
  </ion-content>
 </ion-view>
 
+
+      
+    

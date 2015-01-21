@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.netcompss.ffmpeg4android.IFfmpgefRemoteServiceBridge;
-import com.nua.New.New;
+import com.nuatransmedia.FrontEndBuilder1.FrontEndBuilder1;
 
 
 import android.app.Notification;
@@ -349,7 +349,7 @@ public class TranscodeBackground extends AsyncTask<Void, Integer, Integer>
 		Notification notification = new Notification(icon, notifMessage, when);
 
 		if (Prefs.forceStopFlag) {
-			Intent intent = new Intent(_act.cordova.getActivity().getApplicationContext(), New.class);
+			Intent intent = new Intent(_act.cordova.getActivity().getApplicationContext(), FrontEndBuilder1.class);
 			PendingIntent pIntent = PendingIntent.getActivity(_act.cordova.getActivity().getApplicationContext(), 0, intent, 0);
 			
 			String notifTitle ="notif_message_stopped";
@@ -364,7 +364,7 @@ public class TranscodeBackground extends AsyncTask<Void, Integer, Integer>
 		else if (_transcodingStatus == 0)  {
 			if (_act.getOutputFile() == null) {
 				Log.w(Prefs.TAG, "output file is not set use the setOutputFilePath method to set the full output file path");
-				Intent intent = new Intent(_act.cordova.getActivity().getApplicationContext(), New.class);
+				Intent intent = new Intent(_act.cordova.getActivity().getApplicationContext(), FrontEndBuilder1.class);
 				PendingIntent pIntent = PendingIntent.getActivity(_act.cordova.getActivity().getApplicationContext(), 0, intent, 0);
 				String notifTitle = "notif_message_ok";
 				if (notificationfinishedMessageTitle != null)

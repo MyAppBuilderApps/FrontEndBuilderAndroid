@@ -31,8 +31,8 @@
 	    <label class="item item-input">
 		  <div class="row" style="padding:1px 0px 0px 0px;" >
             <div style="width:50%;"><span class="input-label">Video upload</span></div> 
-            <div style="width:20%;"><img id="videodisurlimg" style="width:50px;heigth:50px;" ng-src="{{videoframe}}" alt="your image" /></div>               
-		    <div style="width:30%;"><button ng-click="videodisplugin();" name="videodisplay" id="videodisplay">Choose</button></div> 
+            <div style="width:20%;"><img id="videodisurlimg" style="width:50px;heigth:50px;" src="img/no_video.png" alt="your image" /></div>               
+		    <div style="width:30%;"><input type="file" name="videodisplay" accept="video/*" id="videodisplay" style="width:100%;"/></div> 
 		  </div>    
        </label> 
        
@@ -93,6 +93,7 @@
 		<button class="button-clear" onClick="sharePhoto();"><img src="img/ic_mail.png" alt="" style="width:32px;height:32px;"/></button>
 
 	</div>
+
 </ion-view>
 
 

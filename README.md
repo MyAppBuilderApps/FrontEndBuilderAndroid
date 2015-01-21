@@ -14,7 +14,7 @@ Please see the Getting Started With Android for PhoneGap guide [here](http://doc
 
 1) MyAppBuilder can easily create iPhone and Android Apps in Minutes or have MyAppBuilder.com create iphone or android apps for you. Save money and time in creating mobile application
 
-1) FrontEndBuilder  is a cloud based Apps,Buttons and Elements sharing platform. 
+1) FrontEndBuilder  is a cloud based Apps,Buttons and Elements sharing platform. 
 
 2) MyAppBuilder.com contains copyrighted material, trademarks and other proprietary information, including, but not limited to, text, software, photos, video, graphics, music and sound, and the entire contents of MyAppBuilder.com are copyrighted as a collective work under the USA copyright laws.
 
@@ -22,13 +22,13 @@ Please see the Getting Started With Android for PhoneGap guide [here](http://doc
 
 MAB FrontEndBuilder shows user Apps in list that functions like a UITableView and also user can Create Apps,Buttons and Elements. User can share a link,Delete buttons & elements,Play Audio & Video,Upload Pictures, View Map etc
 
-###  **_App Controller_**  ##########
+###  **_App Controller_**  ##########
 
- 1) www folder
+  www folder
 
-i) index.html
+i) index.html, templates(folder)
 
-ii) js/index.js
+ii) js/app.js
 
 iii) js/controller.js
 
@@ -42,13 +42,13 @@ Code:
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
     url: "http://build.myappbuilder.com/api/users.json",
 
     data:{'name':Name,'username':regUserId,
 
-                'email':regEmail,'password':regPassword,                                                                                       
+                'email':regEmail,'password':regPassword,                                                                                       
 
                 'password_confirmation':regConfirmPassword},
 
@@ -66,7 +66,7 @@ Code:
 
 ######## **_Sign in_** #############
 
-Login controller inside the index.js
+Login controller inside the controller.js
 
 API For User Sign In: **http://build.myappbuilder.com/api/login.json**
 
@@ -78,17 +78,17 @@ var password = $('#password').val();
 
 $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url: "http://build.myappbuilder.com/api/login.json",
+   url: "http://build.myappbuilder.com/api/login.json",
 
-   data:{'login':userId,'password':password},
+   data:{'login':userId,'password':password},
 
-   success:function(response){ 
+   success:function(response){ 
 
-   if(JSON.stringify(response)      
+   if(JSON.stringify(response)      
 
-         .indexOf("incentive_programs")&gt; -1){
+         .indexOf("incentive_programs")&gt; -1){
 
 //Checking Subscriber or User loginappList = response;
 
@@ -106,7 +106,9 @@ appkeyResult = response;
 
 });
 
-### **_Retrieve data from MAB server_** #####
+## **_View Apps_** #############
+
+ list view controller lists all the app under FrontEndBuilder
 
 API For User retrive Apps: [**http://build.myappbuilder.com/api/users.json**](http://build.myappbuilder.com/api/users.json)
 
@@ -128,7 +130,7 @@ code:
 
     success:function(response){
 
-               appList = response;
+               appList = response;
 
     },
 
@@ -138,39 +140,111 @@ code:
 
 });
 
+List of Apps is then filtered by App Type and App Keys under this root App.
+
+Root App Key is maintained in key.txt file in **www/** folder.
+
+Creator of the Root app can only be able to login as admin.
+
 **** **Create Apps in MAB *******************
 
 API For User to Create Apps: **http://build.myappbuilder.com/api/apps.json**
 
 $scope.appcreate.gridAppTitle     // Title of the app
 
-$scope.appcreate.mypost            // Description of the app
+$scope.appcreate.mypost            // Description of the app
 
 code:
 
 $.ajax({
 
-     type: "POST",
+     type: "POST",
 
-     url: "http://build.myappbuilder.com/api/apps.json",
+     url: "http://build.myappbuilder.com/api/apps.json",
 
-     data:{'api_key':appkeyResult.api_key,'title':
+     data:{'api_key':appkeyResult.api_key,'title':
 
 $scope.appcreate.gridAppTitle,
 
 'description':$scope.appcreate.mypost},
 
-     success:function(response){
+     success:function(response){
 
 },
 
       error:function(error){
 
-       }
+       }
 
 });
 
-For Edit and Delete Apps use PUT and DELETE method
+App Type and Apps under this root App are maintained as custom value for each app on creating an app -
+
+API Used: **http://build.myappbuilder.com/api/book_custom_fields.json**
+
+Code:
+
+ var booktype = new FormData();
+
+            booktype.append('api_key',appKey);
+
+            booktype.append('title',"AppType");
+
+            booktype.append('value','FrontEndBuilder');
+
+            
+
+            $http.post('http://build.myappbuilder.com/api/book_custom_fields.json', booktype, {
+
+                       transformRequest: angular.identity,
+
+                       headers: {'Content-Type': undefined}
+
+                       }).
+
+            success(function(data, status, headers, config) {
+
+                    
+
+                    }).
+
+            error(function(data, status, headers, config) {
+
+                  
+
+                  });
+
+            
+
+            var booktype1 = new FormData();
+
+            booktype1.append('api_key',defaultkey);
+
+            booktype1.append('title',"keys");
+
+            booktype1.append('value',appKey);
+
+            $http.post('http://build.myappbuilder.com/api/book_custom_fields.json', booktype1, {
+
+                       transformRequest: angular.identity,
+
+                       headers: {'Content-Type': undefined}
+
+                       }).
+
+            success(function(data, status, headers, config) {
+
+                    
+
+                    }).
+
+            error(function(data, status, headers, config) {
+
+                  
+
+                  });
+
+For edit and delete function use **PUT** and **DELETE** methods.
 
 ****** **Floating Social Icons and URL Creation** **********
 
@@ -182,23 +256,23 @@ code:
 
 $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/
+   url:"http://build.myappbuilder.com/api/
 
-         book_custom_fields.json",
+         book_custom_fields.json",
 
-   data:{'api_key':appKey,'title':'Floating Social Icons','value': 
+   data:{'api_key':appKey,'title':'Floating Social Icons','value': 
 
             $scope.appcre.customvalue},
 
-   success:function(response){ 
+   success:function(response){ 
 
-   },
+   },
 
-   error:function(error){  
+   error:function(error){  
 
-   },
+   },
 
 }); 
 
@@ -206,29 +280,29 @@ API For User URL Creation: 
 
 [**http://build.myappbuilder.com/api/book_custom_fields.json**](http://build.myappbuilder.com/api/book_custom_fields.json)
 
-$scope.appcre.floaturl    // URL to mention(to share in Social    networks) 
+$scope.appcre.floaturl    // URL to mention(to share in Social    networks) 
 
 code:
 
 $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/
+   url:"http://build.myappbuilder.com/api/
 
-         book_custom_fields.json",
+         book_custom_fields.json",
 
   data:{'api_key':appKey,'title':'Url','value':
 
-$scope.appcre.floaturl},         
+$scope.appcre.floaturl},         
 
-   success:function(response){ 
+   success:function(response){ 
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   },
+   },
 
 }); 
 
@@ -246,7 +320,7 @@ formData.append('twitter_link',
 
 $scope.book.twitter_username);
 
-formData.append('twitter_key',$scope.book.twitter_key); formData.append('twitter_secret',                 
+formData.append('twitter_key',$scope.book.twitter_key); formData.append('twitter_secret',                 
 
 $scope.book.twitter_secret);
 
@@ -314,15 +388,17 @@ cordova.exec(function(response){
 
            
 
-   },
+   },
 
-             function(response){  
+             function(response){  
 
              
 
       }, "Echo", "echo", ["57", "57", "image", image, "http://build.myappbuilder.com/api/buttons.json?", "post", {"api_key":appKey,"title":$scope.buttoncreate.title}])          
 
-            
+            
+
+This cordova plugin is used to compress the selected image to desired width and height.
 
 API For User to Create Buttons(Image is not selected): **http://build.myappbuilder.com/api/buttons/via_url.json**
 
@@ -332,7 +408,7 @@ var letter = ($scope.buttoncreate.title).charAt(0).toUpperCase();
 
 'http://nuatransmedia.com/iBookImages/'+letter+'.png'    
 
-          // Incase image is not selected,will assign this        letter(first letter of the button title) image 
+          // Incase image is not selected,will assign this        letter(first letter of the button title) image 
 
 code :
 
@@ -378,29 +454,29 @@ API For User to Create Picture and Text Elements: [**http://build.myappbuilder.c
 
 **create_default.json**
 
-buttonId                  //  id of the Button
+buttonId                  //  id of the Button
 
-$scope.para.title    //  title of the picture and text
+$scope.para.title    //  title of the picture and text
 
-$scope.textCreate.textpic                                                                //Description of the picture and text 
+$scope.textCreate.textpic                                                                //Description of the picture and text 
 
 code :
 
 $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/   create_default.json",
+   url:"http://build.myappbuilder.com/api/elements/   create_default.json",
 
-   data:{'api_key':appKey,'button_id':buttonId,'title':          $scope.para.title,'text':$scope.textCreate.textpic},
+   data:{'api_key':appKey,'button_id':buttonId,'title':          $scope.para.title,'text':$scope.textCreate.textpic},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -412,21 +488,21 @@ API For User to Upload Custom Pictures: [**http://build.myappbuilder.com/api/ele
 
 **images.json**
 
-elementId                      //  id of the Element
+elementId                      //  id of the Element
 
-      
+      
 
 code :
 
  cordova.exec(function(response){
 
-              
+              
 
   },
 
-   function(e){
+   function(e){
 
-   }, "Echo_Capture", "echo_capture", ["300", "280", "image", imagepic, "http://build.myappbuilder.com/api/elements/images.json?", "post", {"api_key":appKey,"id":elementId}])          
+   }, "Echo_Capture", "echo_capture", ["300", "280", "image", imagepic, "http://build.myappbuilder.com/api/elements/images.json?", "post", {"api_key":appKey,"id":elementId}])          
 
        
 
@@ -438,11 +514,11 @@ API For User to Upload Custom Values: [**http://build.myappbuilder.com/api/eleme
 
 **custom_values.json**
 
-      
+      
 
 code :
 
-   $.ajax({
+   $.ajax({
 
           type: "POST",
 
@@ -452,13 +528,39 @@ code :
 
           success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
+
+**Upload Tags ** 
+
+API Used: **http://build.myappbuilder.com/api/elements/tags.json**
+
+   $.ajax({
+
+             type: "POST",
+
+             url: "http://build.myappbuilder.com/api/elements/tags.json",
+
+             data:{'api_key':appKey,'id':elementId,'tags':amenities},
+
+             cache: false,
+
+             success:function(response){
+
+             },
+
+             error:function(error,status){
+
+           
+
+             }
+
+     });
 
 **2)Video Creation**
 
@@ -474,7 +576,7 @@ cordova.exec(function(response){ 
 
 }, 
 
-function(e){}, "BaseWizard", "videocompress",["http://build.myappbuilder.com/api/elements/create_video.json?", "post", {"api_key":appKey,"button_id":buttonId,"title":$scope.videocreate.title,"description":$scope.videocreate.desc,"video":videopath,"video_thumbnail":imagevideo,"video_frame":videoframe}])   
+function(e){}, "BaseWizard", "videocompress",["http://build.myappbuilder.com/api/elements/create_video.json?", "post", {"api_key":appKey,"button_id":buttonId,"title":$scope.videocreate.title,"description":$scope.videocreate.desc,"video":videopath,"video_thumbnail":imagevideo,"video_frame":videoframe}])   
 
        
 
@@ -522,19 +624,19 @@ code :
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/   create_rss.json",
+   url:"http://build.myappbuilder.com/api/elements/   create_rss.json",
 
-   data:{'api_key':appKey,'button_id':buttonId,'title':     $scope.createrss.rssname,'url':     $scope.createrss.rssurl,'description':       $scope.createrss.rssdesc},
+   data:{'api_key':appKey,'button_id':buttonId,'title':     $scope.createrss.rssname,'url':     $scope.createrss.rssurl,'description':       $scope.createrss.rssdesc},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -550,19 +652,19 @@ code :
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/   create_web_page.json",
+   url:"http://build.myappbuilder.com/api/elements/   create_web_page.json",
 
-   data:{'api_key':appKey,'button_id':buttonId,'title':       $scope.createweb.livewebname,'url':        $scope.createweb.liveweburl,'description':      $scope.createweb.livewebdesc},
+   data:{'api_key':appKey,'button_id':buttonId,'title':       $scope.createweb.livewebname,'url':        $scope.createweb.liveweburl,'description':      $scope.createweb.livewebdesc},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -578,19 +680,19 @@ code :
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/   create_contact_form.json",
+   url:"http://build.myappbuilder.com/api/elements/   create_contact_form.json",
 
-   data:{'api_key':appKey,'button_id':buttonId,'email':       $scope.form.email},
+   data:{'api_key':appKey,'button_id':buttonId,'email':       $scope.form.email},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -606,19 +708,19 @@ code :
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/   create_map.json",
+   url:"http://build.myappbuilder.com/api/elements/   create_map.json",
 
-   data:{'api_key':appKey,'button_id':buttonId,'text':      $scope.createmapaddr.maptitle},
+   data:{'api_key':appKey,'button_id':buttonId,'text':      $scope.createmapaddr.maptitle},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -632,19 +734,19 @@ code :
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url:"http://build.myappbuilder.com/api/elements/tasks.json",
+   url:"http://build.myappbuilder.com/api/elements/tasks.json",
 
-   data:{'api_key':appKey,'id':taskelement,'title':     $scope.createedittask.taskTitle,'description':     $scope.createedittask.taskDescription},
+   data:{'api_key':appKey,'id':taskelement,'title':     $scope.createedittask.taskTitle,'description':     $scope.createedittask.taskDescription},
 
-   success:function(response){
+   success:function(response){
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
@@ -672,49 +774,49 @@ formData.append('subscriber[phone]',$scope.data2.phone);
 
 formData.append('subscriber[password]',$scope.data2.password);
 
-formData.append('subscriber[password_confirmation]',      $scope.data2.confirmpassword);
+formData.append('subscriber[password_confirmation]',      $scope.data2.confirmpassword);
 
  $.ajax({
 
-   type: "POST",
+   type: "POST",
 
-   url: "http://build.myappbuilder.com/api/subscribers.json",
+   url: "http://build.myappbuilder.com/api/subscribers.json",
 
-   data: formData,
+   data: formData,
 
-   cache: false,
+   cache: false,
 
-   contentType: false,
+   contentType: false,
 
-   processData: false,
+   processData: false,
 
-   success:function(response){
+   success:function(response){
 
-   cordova.exec(function(response){
+   cordova.exec(function(response){
 
-                                      
+                                      
 
                                        
 
-                                       },
+                                       },
 
-                                       function(e){ 
+                                       function(e){ 
 
   }, "Echo", "echo", ["90", "90", "avatar", avatarimg, "http://build.myappbuilder.com/api/subscribers.json?", "put", {"api_key":appKey,"id":subid,"firstname":$scope.data2.firstname,"lastname":$scope.data2.lastname,"username":$scope.data2.username,"email":$scope.data2.email,"phone":$scope.data2.phone,"password":$scope.data2.password,"password_confirm":$scope.data2.confirmpassword}])
 
-                          
+                          
 
-   },
+   },
 
-   error:function(error){
+   error:function(error){
 
-   }
+   }
 
 });
 
 ******* **MAB share file** ***************
 
-i)  FaceBook 
+i)  FaceBook 
 
 ii) Twitter 
 

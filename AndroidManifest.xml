@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nuatransmedia.FrontEndBuilder"
+    package="com.nuatransmedia.FrontEndBuilder1"
     android:hardwareAccelerated="true"
-    android:versionCode="2"
-    android:versionName="0.0.2"
+    android:versionCode="1"
+    android:versionName="0.0.1"
     android:windowSoftInputMode="adjustPan" >
 
     <supports-screens
@@ -19,7 +19,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name="FrontEndBuilder"
+            android:name="FrontEndBuilder1"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:label="@string/app_name"
             android:launchMode="singleTop"
@@ -29,11 +29,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="org.apache.cordova.plugin.Gallery_Activity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name="org.apache.cordova.plugin.Audio_Activity"
@@ -61,13 +56,9 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="19" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+   
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -75,5 +66,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>

@@ -15,7 +15,7 @@ import android.util.Log;
 
 
 import com.netcompss.ffmpeg4android_client.Prefs;
-import com.nua.New.New;
+import com.nuatransmedia.FrontEndBuilder1.FrontEndBuilder1;
 
 public class ProgressBackgroundRemote extends AsyncTask<Void, Integer, Integer> {
 	
@@ -59,7 +59,7 @@ public class ProgressBackgroundRemote extends AsyncTask<Void, Integer, Integer> 
 		while ( (progress = _bridge.getTranscodingProgress() ) < 100) {
 			Log.i(Prefs.TAG, "======================== progress from remote: " +  progress);
 			nm = (NotificationManager) _context.getSystemService(_context.NOTIFICATION_SERVICE);
-			Intent intent = new Intent(_context, New.class); 
+			Intent intent = new Intent(_context,FrontEndBuilder1.class); 
 			PendingIntent pIntent = PendingIntent.getActivity(_context.getApplicationContext(), 0, intent, 0);
 			
 			String notificationTitle =  (_bridge.getNotificationTitle() == null) ? "Back progreess 1": _bridge.getNotificationTitle();

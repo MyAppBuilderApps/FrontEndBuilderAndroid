@@ -2,7 +2,7 @@
  <div  class="bar bar-header bar-positive" >
         
         <button class="button icon ion-ios7-arrow-back button-positive" ng-click="backsublist();"></button>
-        <h1 class="title" style="padding:0% 7% 0% 6%;font-size:17px;">{{appTitle}}</h1>
+        <h1 class="title" style="padding:0% 7% 0% 6%;font-size:18px;">{{appTitle}}</h1>
     </div>
 
 <ion-content >
@@ -30,13 +30,13 @@
               
               <div class="row" style="padding-top:22px;">
                   
-                  <div class="col" style="font-size:16px;padding:0px;">
+                  <div class="col" style="font-size:20px;padding:0px;">
                       
                       <img id='checkavatar2' ng-src="{{avatar123(item.avatar)}}" style="width:60px; height:60px;"/>
                       
                   </div>
                   
-                  <div class="col col-75" style="font-size:16px;padding:0px;">
+                  <div class="col col-75" style="font-size:20px;padding:0px;">
                       
                       <div ng-click="nextpage(item.id,item.avatar,item.fullname,item.email,item.phone,item.username);" style="font-size:16px;padding:5px;">
                           
@@ -65,21 +65,20 @@
 <script id="my-modal.html" type="text/ng-template">
     <div class="modal">
     <ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title" >Subscriber</h1>
+    <h1 class="title" style="font-size:18px;">Subscriber</h1>
     <button class="button button-clear button-primary" ng-click="removesubs();"><img src="img/close.png" style="width:30px;height:30px;"/></button>
     </ion-header-bar>
     
     <ion-content>
     
     <div style="padding:10% 0% 5% 0%;" align="center">
-    <div style="margin:auto;width:40%;">
     
-    <div class="file-input-wrapper" >
-    <div><img id="avatar" src="img/add_image.png" style="width:90px;heigth:90px;" ng-click="avatar();"/></div>
+    <div class="file-input-wrapper" style="width:100px;heigth:100px;">
+    <div><img id="avatar" src="img/add_image.png" style="width:100px; height:100px;" ng-click="avatar();"/></div>
     </div>
     
     </div>
-    </div>
+
     
     <div class="list" >
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
@@ -149,17 +148,17 @@
 <script id="my-modal1.html" type="text/ng-template">
     <div class="modal">
     <ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title" >Subscriber</h1>
+    <h1 class="title" style="font-size:18px;">Subscriber</h1>
     <button class="button button-clear button-primary" ng-click="removesubs1();"><img src="img/close.png" style="width:30px;height:30px;"/></button>
     </ion-header-bar>
     
     <ion-content>
     
     <div style="padding:10% 0% 5% 0%;" align="center">
-    <div style="margin:auto;width:40%;">
+    <div style="margin:auto;width:80%;">
     
-    <div class="file-input-wrapper" >
-    <div><img id="avatar1" src="img/add_image.png" style="width:90px;heigth:90px;" ng-click="avatar1();"/></div>
+    <div class="file-input-wrapper" style="width:100px;heigth:100px;">
+    <div><img id="avatar1" src="img/add_image.png" style="width:90px; height:90px;" ng-click="avatar1();"/></div>
     </div>
     
     </div>
@@ -174,42 +173,42 @@
     
     <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
-    <i class="icon"><img src="img/last_name.png" style="width:22px;height:22px;margin-left:12px;"/></i>
+    <i class="icon"><img src="img/last_name.png" style="width:18px;height:18px;margin-left:12px;"/></i>
     <input type="text" placeholder="Lastname"  ng-model="data3.lastname" style="font-size:16px;margin-left:14px;"/>
     </label>
     </div>
     
      <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
-    <i class="icon"><img src="img/name.png" style="width:22px;height:22px;margin-left:12px;"/></i>
+    <i class="icon"><img src="img/name.png" style="width:18px;height:18px;margin-left:12px;"/></i>
     <input type="text" placeholder="Username"  ng-model="data3.username" style="font-size:16px;margin-left:14px;"/>
     </label>
     </div>
     
     <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
-    <i class="icon"><img src="img/mail.png" style="width:22px;height:22px;margin-left:12px;"/></i>
+    <i class="icon"><img src="img/mail.png" style="width:18px;height:18px;margin-left:12px;"/></i>
     <input type="email"  placeholder="Enter valid email id"  ng-model="data3.email" style="font-size:16px;margin-left:14px;"/>
     </label>
     </div>
     
      <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
-    <i class="icon"><img src="img/password.png" style="width:22px;height:22px;margin-left:12px;"/></i>
+    <i class="icon"><img src="img/password.png" style="width:18px;height:18px;margin-left:12px;"/></i>
     <input type="password"  placeholder="Password"  ng-model="data3.password" style="font-size:16px;margin-left:14px;"/>
     </label>
     </div>
     
     <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;">
-    <i class="icon"><img src="img/password.png" style="width:22px;height:22px;margin-left:12px;"/></i>
+    <i class="icon"><img src="img/password.png" style="width:18px;height:18px;margin-left:12px;"/></i>
     <input type="password"  placeholder="Confirm Password"  ng-model="data3.confirmpassword" style="font-size:16px;margin-left:14px;"/>
     </label>
     </div>
     
     <div class="list">
     <label class="item item-input" style="background-image:url(img/text_box.png);background-size:100% 100%;" >
-    <i class="icon"><img src="img/btn_phone.png" style="width:22px;height:22px;margin-left:12px;" /></i>
+    <i class="icon"><img src="img/btn_phone.png" style="width:18px;height:18px;margin-left:12px;" /></i>
     <input type="phone"  placeholder="Phone"  ng-model="data3.phone" style="font-size:16px;margin-left:14px;"/ >
     </label>
     </div>

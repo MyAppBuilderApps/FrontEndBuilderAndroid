@@ -2,12 +2,10 @@ package com.netcompss.ffmpeg4android_client;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.SocketTimeoutException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
@@ -16,8 +14,6 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.plugin.Audio_Activity;
-import org.apache.cordova.plugin.ConnectionDetector;
-import org.apache.cordova.plugin.Constant;
 import org.apache.cordova.plugin.ScalingUtilities;
 import org.apache.cordova.plugin.Video_Activity;
 import org.apache.cordova.plugin.Video_Compress;
@@ -31,10 +27,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.netcompss.ffmpeg4android.IFfmpgefRemoteServiceBridge;
 import com.netcompss.ffmpeg4android.LicenseCheckJNI;
-import com.nuatransmedia.FrontEndBuilder.R;
-import com.squareup.okhttp.internal.Base64;
+import com.nuatransmedia.FrontEndBuilder1.R;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -44,12 +38,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory.Options;
 import android.media.ExifInterface;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
@@ -57,19 +49,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
-import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Video;
 import android.text.Html;
 import android.util.Log;
 //import android.widget.Toast;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 //import android.widget.Toast;
 
@@ -81,6 +66,9 @@ import android.widget.Toast;
  * @author ehasson
  * 
  */
+
+
+
 public class BaseWizard extends CordovaPlugin {
 
 	protected IFfmpgefRemoteServiceBridge remoteService;
@@ -88,8 +76,6 @@ public class BaseWizard extends CordovaPlugin {
 	protected RemoteServiceConnection conn = null;
 	protected boolean invokeFlag = false;
 	protected ProgressDialog progressDialog;
-	public static Boolean isInternetPresent = false;
-	public static ConnectionDetector cd;
 
 	protected int PICK_REQUEST_CODE = 0;
 
@@ -105,7 +91,7 @@ public class BaseWizard extends CordovaPlugin {
 	static int w = 80;
 	static int h = 80;
 
-	private String progressDialogMessage, capturepath = null;
+	private String progressDialogMessage;
 	private String progressDialogTitle;
 
 	private int notificationIcon;
@@ -731,54 +717,43 @@ public class BaseWizard extends CordovaPlugin {
 				params.put("video", new File("/sdcard/videokit/final.mp4"));
 			}
 
-			if (Constant.img_url != null) {
-				Log.d("video_thumbnail_url", Constant.img_url);
-				params.put("video_thumbnail_url", Constant.img_url);
-			} else {
-				// video_thumbnail
-				if (obj.has("video_thumbnail")) {
-					String image = obj.getString("video_thumbnail");
-					if (image != null) {
-						Log.d("video_thumbnail", image);
-						if (image.contains("content") || image.contains("file")) {
-							String getString = getFileNameByUri(context,
-									Uri.parse(image));
-							String thumb = reporteds(getString);
-							params.put("video_thumbnail", new File(thumb));
-						} else {
-							String thumb = reporteds(image);
-							params.put("video_thumbnail", new File(thumb));
-						}
-					} else {
-						String thumb = reporteds(video_thumbpath
-								.getAbsolutePath());
+			// video_thumbnail
+			if (obj.has("video_thumbnail")) {
+				String image = obj.getString("video_thumbnail");
+				if (image != null) {
+					Log.d("image", image);
+					if (image.contains("content") || image.contains("file")) {
+						String getString = getFileNameByUri(context,
+								Uri.parse(image));
+						String thumb = reporteds(getString);
 						params.put("video_thumbnail", new File(thumb));
-						Log.d("image path32", video_thumbpath.getAbsolutePath());
+					} else {
+						String thumb = reporteds(image);
+						params.put("video_thumbnail", new File(thumb));
 					}
 				} else {
 					String thumb = reporteds(video_thumbpath.getAbsolutePath());
 					params.put("video_thumbnail", new File(thumb));
-					Log.d("image path33", video_thumbpath.getAbsolutePath());
+					Log.d("image path32", video_thumbpath.getAbsolutePath());
 				}
+			} else {
+				String thumb = reporteds(video_thumbpath.getAbsolutePath());
+				params.put("video_thumbnail", new File(thumb));
+				Log.d("image path33", video_thumbpath.getAbsolutePath());
 			}
 
-			if (obj.has("video_frame")) {
-				String images = obj.getString("video_frame");
-				if (images != null) {
-					Log.d("video_frame_url", images);
-					if (images.contentEquals("null")) {
-
-					} else if (images.contains("http")
-							|| images.contains("https")) {
-						params.put("video_frame_url", images);
-
-					} else if (Constant.frm_url != null) {
-						params.put("video_frame_url", Constant.frm_url);
-					}
-				}
+			AsyncHttpClient client = new AsyncHttpClient();
+			// client.setTimeout(5000);
+			client.addHeader("Accept", "appliction/json");
+			Log.d("api", arry.getString(0));
+			Log.d("method", arry.getString(1));
+			if (arry.getString(1).equalsIgnoreCase("post")) {
+				client.post(arry.getString(0).replace("?", ""), params,
+						responseHandler);
+			} else if (arry.getString(1).equalsIgnoreCase("put")) {
+				client.put(arry.getString(0).replace("?", ""), params,
+						responseHandler);
 			}
-
-			posted(arry, params);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -790,26 +765,8 @@ public class BaseWizard extends CordovaPlugin {
 
 	}
 
-	private void posted(JSONArray arry, RequestParams params)
-			throws JSONException {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setTimeout(200000);
-		client.addHeader("Accept", "appliction/json");
-		Log.d("api", arry.getString(0));
-		Log.d("method", arry.getString(1));
-		if (arry.getString(1).equalsIgnoreCase("post")) {
-			client.post(arry.getString(0).replace("?", ""), params,
-					responseHandler);
-		} else if (arry.getString(1).equalsIgnoreCase("put")) {
-			client.put(arry.getString(0).replace("?", ""), params,
-					responseHandler);
-		}
-
-	}
-
 	String strMyImagePath = null;
 	File f = null;
-
 	@SuppressWarnings("unused")
 	private String reporteds(String path) {
 
@@ -833,16 +790,8 @@ public class BaseWizard extends CordovaPlugin {
 		}
 
 		if (path != null) {
-
-			Options options = new Options();
-			options.inSampleSize = 2;
-			options.inJustDecodeBounds = true;
-			BitmapFactory.decodeResource(context.getResources(), srcBgId,
-					options);
-			options.inJustDecodeBounds = false;
-			options.inSampleSize = calculateInSampleSize(options, w, h);
-			Bitmap unbgbtmp = BitmapFactory.decodeResource(
-					context.getResources(), srcBgId, options);
+			Bitmap unbgbtmp = ScalingUtilities.decodeResource(
+					context.getResources(), srcBgId, w, h, ScalingLogic.FIT);
 			Bitmap bgbtmp = ScalingUtilities.createScaledBitmap(unbgbtmp, w, h,
 					ScalingLogic.FIT);
 			unbgbtmp.recycle();
@@ -853,10 +802,10 @@ public class BaseWizard extends CordovaPlugin {
 			unrlbtmp.recycle();
 			Bitmap newscaledBitmap = ProcessingBitmapTwo(bgbtmp, rlbtmp);
 			String extr = Environment.getExternalStorageDirectory().toString();
-			File mFolder = new File(extr + "/MYAPPBUILDER2");
+			File mFolder = new File(extr + "/MAB");
 			if (!mFolder.exists()) {
 				mFolder.mkdir();
-			} else {
+			}else{
 				mFolder.delete();
 				mFolder.mkdir();
 			}
@@ -885,54 +834,32 @@ public class BaseWizard extends CordovaPlugin {
 		}
 
 	}
-
-	public static int calculateInSampleSize(BitmapFactory.Options options,
-			int reqWidth, int reqHeight) {
-		// Raw height and width of image
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
-
-		if (height > reqHeight || width > reqWidth) {
-
-			// Calculate ratios of height and width to requested height and
-			// width
-			final int heightRatio = Math.round((float) height
-					/ (float) reqHeight);
-			final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-			// Choose the smallest ratio as inSampleSize value, this will
-			// guarantee
-			// a final image with both dimensions larger than or equal to the
-			// requested height and width.
-			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-		}
-
-		return inSampleSize;
-	}
-
-	public String createVideoThumbnail(String fDescriptor) {
-		Bitmap thumb = null;
-		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-		try {
-			retriever.setDataSource(fDescriptor);
-			thumb = retriever.getFrameAtTime(-1);
-			int width = thumb.getWidth();
-			int height = thumb.getHeight();
-			int max = Math.max(width, height);
-			if (max > 512) {
-				float scale = 512f / max;
-				int w = Math.round(scale * width);
-				int h = Math.round(scale * height);
-				thumb = Bitmap.createScaledBitmap(thumb, w, h, true);
-			}
-
+	
+	
+	public String createVideoThumbnail(String fDescriptor) 
+	 {
+	    Bitmap thumb = null;
+	    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+	    try {
+	        retriever.setDataSource(fDescriptor);
+	        thumb = retriever.getFrameAtTime(-1);
+	        int width = thumb.getWidth();
+	        int height = thumb.getHeight();
+	        int max = Math.max(width, height);
+	        if (max > 512) {
+	            float scale = 512f / max;
+	            int w = Math.round(scale * width);
+	            int h = Math.round(scale * height);
+	            thumb = Bitmap.createScaledBitmap(thumb, w, h, true);
+	        }
+	        
 			FileOutputStream fos = null;
-			String extr = Environment.getExternalStorageDirectory().toString();
-			File mFolder = new File(extr + "/MYAPPBUILDER2");
+			String extr = Environment.getExternalStorageDirectory()
+					.toString();
+			File mFolder = new File(extr + "/MYAPPBUILDER");
 			if (!mFolder.exists()) {
 				mFolder.mkdir();
-			} else {
+			}else{
 				mFolder.delete();
 				mFolder.mkdir();
 			}
@@ -954,26 +881,27 @@ public class BaseWizard extends CordovaPlugin {
 
 				e.printStackTrace();
 			}
-
-		} catch (IllegalArgumentException ex) {
-			// Assume this is a corrupt video file
-			Log.e("e",
-					"Failed to create video thumbnail for file description: "
-							+ fDescriptor.toString());
-		} catch (RuntimeException ex) {
-			// Assume this is a corrupt video file.
-			Log.e("e",
-					"Failed to create video thumbnail for file description: "
-							+ fDescriptor.toString());
-		} finally {
-			try {
-				retriever.release();
-			} catch (RuntimeException ex) {
-				// Ignore failures while cleaning up.
-			}
-		}
+		
+	    } 
+	    catch (IllegalArgumentException ex) {
+	        // Assume this is a corrupt video file
+	        Log.e("e", "Failed to create video thumbnail for file description: " + fDescriptor.toString());
+	    }
+	    catch (RuntimeException ex) {
+	        // Assume this is a corrupt video file.
+	        Log.e("e", "Failed to create video thumbnail for file description: " + fDescriptor.toString());
+	    } finally {
+	        try {
+	            retriever.release();
+	        } catch (RuntimeException ex) {
+	            // Ignore failures while cleaning up.
+	        }
+	    }
 		return returnPath;
-	}
+	 }
+
+
+	
 
 	public AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
 		@Override
@@ -987,71 +915,18 @@ public class BaseWizard extends CordovaPlugin {
 			// TODO Auto-generated method stub
 			super.onSuccess(arg0);
 			Log.e("mesage", arg0);
-
-			deleted();
-
+			//String path = createVideoThumbnail("/sdcard/videokit/final.mp4");
+			//if(path != null){
+				//PluginResult progressResult = new PluginResult(
+				//PluginResult.Status.OK, arg0 + "thumbpath=" + returnPath);
+				//progressResult.setKeepCallback(true);
+				//BaseWizard.this.callbackContext.sendPluginResult(progressResult);
+			//}else{
 			PluginResult progressResult = new PluginResult(
-					PluginResult.Status.OK, arg0);
+					PluginResult.Status.OK, arg0 );
 			progressResult.setKeepCallback(true);
 			BaseWizard.this.callbackContext.sendPluginResult(progressResult);
-			// }
-		}
-
-		private void deleted() {
-			String extr = Environment.getExternalStorageDirectory().toString();
-			File mFolder = new File(extr + "/MYAPPBUILDER2");
-			if (mFolder.exists()) {
-				File[] files = mFolder.listFiles();
-				if (files == null) {
-
-				}
-				for (int i = 0; i < files.length; i++) {
-					if (files[i].isDirectory()) {
-
-					} else {
-						files[i].delete();
-					}
-				}
-				if (files.length == 0) {
-					mFolder.delete();
-				}
-			}
-			File mFolders = new File(extr + "/MYAPPBUILDER1");
-			if (mFolders.exists()) {
-				File[] files = mFolders.listFiles();
-				if (files == null) {
-
-				}
-				for (int i = 0; i < files.length; i++) {
-					if (files[i].isDirectory()) {
-
-					} else {
-						files[i].delete();
-					}
-				}
-				if (files.length == 0) {
-					mFolders.delete();
-				}
-			}
-
-			File mFolders1 = new File(extr + "/MYAPPBUILDER");
-			if (mFolders1.exists()) {
-				File[] files = mFolders1.listFiles();
-				if (files == null) {
-
-				}
-				for (int i = 0; i < files.length; i++) {
-					if (files[i].isDirectory()) {
-
-					} else {
-						files[i].delete();
-					}
-				}
-				if (files.length == 0) {
-					mFolders1.delete();
-				}
-			}
-
+			//}
 		}
 
 		public void onFailure(Throwable arg0, String arg1) {
@@ -1067,6 +942,89 @@ public class BaseWizard extends CordovaPlugin {
 		};
 
 	};
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d(Prefs.TAG, "BaseWizard onDestroy");
+		stopTranscoding();
+	}
+
+	/*
+	 * ["http:\/\/build.myappbuilder.com\/api\/elements\/create_video.json?",
+	 * "post", {"button_id":2882,"title":"ryghh",
+	 * "video":{"fileSize":35583,"fileName"
+	 * :"final.mp4","lastModifiedDate":"2014-09-24T14:45:33.000Z"
+	 * ,"type":"video\/mp4","size":35583,"name":"final.mp4"},
+	 * "description":"hvffjgg","api_key":"d1f3d280dbdd89eeacda0077e100ba67"} ]
+	 * ddddd 3
+	 */
+	String Tag = "Video_Compress";
+	String jsondata;
+	String post_imgpth = null;
+	public CallbackContext callbackContext;
+	public Context context;
+	public int wid = 80, hig = 80;
+
+	public boolean execute(String actiosaveImagen, JSONArray args,
+			CallbackContext callbackContext) throws JSONException {
+		this.callbackContext = callbackContext;
+		context = this.cordova.getActivity().getApplicationContext();
+		jsondata = args.toString();
+		Log.e("json", args.toString() + " ddddd " + args.length());
+		if (args != null && args.length() > 0) {
+			JSONObject obj = args.getJSONObject(2).getJSONObject("video");
+			String[] temp = null;// args.getString(0).split("/");
+			temp = getVideoPath(obj.getString("fileName"));
+			if (temp[0].equalsIgnoreCase("success")) {
+				File file = new File(temp[1]);
+				String hrSize = "";
+				long size = file.length();
+				double m = size / 1048576;
+				;
+				if (m < 32) {
+					copyLicenseAndDemoFilesFromAssetsToSDIfNeeded();
+					commandStr = "ffmpeg -y -i "
+							+ temp[1]
+							+ " -strict experimental -s 160x120 -r 25 -aspect 4:3 -vcodec mpeg4 -b 97152 -ab 48000 -ac 2 -ar 22050 /sdcard/videokit/final.mp4";
+					setWorkingFolder("/sdcard/videokit/");
+					setCommand(commandStr);
+					setOutputFilePath("/sdcard/videokit/final.mp4");
+
+					Log.i(Prefs.TAG,
+							"ffmpeg4android library version: "
+									+ Prefs.getLibraryVersionName());
+					runTranscoing();
+				} else {
+					JSONObject object = new JSONObject();
+					try {
+						object.put("statues", "Error");
+						object.put("message",
+								"file size should not greater than 30MB....");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					PluginResult progressResult = new PluginResult(
+							PluginResult.Status.ERROR, object);
+					progressResult.setKeepCallback(true);
+					callbackContext.sendPluginResult(progressResult);
+				}
+			} else {
+				PluginResult progressResult = new PluginResult(
+						PluginResult.Status.ERROR, temp[0]);
+				progressResult.setKeepCallback(true);
+				callbackContext.sendPluginResult(progressResult);
+			}
+		} else {
+			PluginResult progressResult = new PluginResult(
+					PluginResult.Status.ERROR,
+					"parameter required or incorrect");
+			progressResult.setKeepCallback(true);
+			callbackContext.sendPluginResult(progressResult);
+		}
+
+		return true;// super.execute(action, args, callbackContext);
+	}
 
 	File video_thumbpath = null;
 
@@ -1086,7 +1044,6 @@ public class BaseWizard extends CordovaPlugin {
 			videocursor.moveToFirst();
 			while (!videocursor.isAfterLast()) {
 				String path = videocursor.getString(0);
-				capturepath = path;
 				String thumbpath = videocursor.getString(3);
 				Log.e(Tag, "path:" + path + "  thumb:" + thumbpath);
 				String[] temp = path.split("/");
@@ -1096,10 +1053,10 @@ public class BaseWizard extends CordovaPlugin {
 					FileOutputStream fos = null;
 					String extr = Environment.getExternalStorageDirectory()
 							.toString();
-					File mFolder = new File(extr + "/MYAPPBUILDER2");
+					File mFolder = new File(extr + "/MYAPPBUILDER");
 					if (!mFolder.exists()) {
 						mFolder.mkdir();
-					} else {
+					}else{
 						mFolder.delete();
 						mFolder.mkdir();
 					}
@@ -1107,7 +1064,7 @@ public class BaseWizard extends CordovaPlugin {
 					String s = "myappbuilder.png";
 
 					video_thumbpath = new File(mFolder.getAbsolutePath(), s);
-					// returnPath = video_thumbpath.getAbsolutePath();
+					//returnPath = video_thumbpath.getAbsolutePath();
 
 					try {
 						fos = new FileOutputStream(video_thumbpath);
@@ -1168,106 +1125,23 @@ public class BaseWizard extends CordovaPlugin {
 		return newBitmap;
 	}
 
+	
+
 	public String getFileNameByUri(Context context, Uri uri) {
 		String fileName = "unknown";// default fileName
 		Uri filePathUri = uri;
 		if (uri.getScheme().toString().compareTo("content") == 0) {
-			ParcelFileDescriptor parcelFileDescriptor;
-			String filename = null;
-			try {
-				FileOutputStream fos = null;
-				parcelFileDescriptor = context.getContentResolver()
-						.openFileDescriptor(uri, "r");
-				FileDescriptor fileDescriptor = parcelFileDescriptor
-						.getFileDescriptor();
-				Bitmap image = BitmapFactory
-						.decodeFileDescriptor(fileDescriptor);
-				String extr = Environment.getExternalStorageDirectory()
-						.toString();
-				File mFolder = new File(extr + "/MYAPPBUILDER2");
-				if (!mFolder.exists()) {
-					mFolder.mkdir();
-				} else {
-					mFolder.delete();
-					mFolder.mkdir();
-				}
-
-				String s = "Rough.png";
-
-				File f = new File(mFolder.getAbsolutePath(), s);
-
-				filename = f.getAbsolutePath();
-				Log.d("f", filename);
-				try {
-					fos = new FileOutputStream(f);
-					image.compress(Bitmap.CompressFormat.PNG, 100, fos);
-					fos.flush();
-					fos.close();
-				} catch (FileNotFoundException e) {
-
-					e.printStackTrace();
-				} catch (Exception e) {
-
-					e.printStackTrace();
-				}
-				parcelFileDescriptor.close();
-				return filename;
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Cursor cursor = context.getContentResolver().query(uri, null, null,
+					null, null);
+			if (cursor.moveToFirst()) {
+				int column_index = cursor
+						.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+				filePathUri = Uri.parse(cursor.getString(column_index));
+				fileName = filePathUri.getPath();
 			}
-			/*
-			 * String[] projection = { MediaStore.Images.Media.DATA }; Cursor
-			 * cursor = context.getContentResolver().query(uri, projection,
-			 * null, null, null); if (cursor != null) { int column_index =
-			 * cursor .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			 * cursor.moveToFirst(); fileName = cursor.getString(column_index);
-			 * Log.d("get", fileName); //filePathUri =
-			 * Uri.parse(cursor.getString(column_index)); //fileName =
-			 * filePathUri.getPath(); } Log.d("content", "content");
-			 */
+			Log.d("content", "content");
 		} else if (uri.getScheme().compareTo("file") == 0) {
 			fileName = filePathUri.getPath();
-			File fill = new File(fileName);
-			if (fill.exists()) {
-				Log.d("exitst", "exist");
-				ParcelFileDescriptor parcelFileDescriptor;
-				String filename = null;
-				FileOutputStream fos = null;
-				Bitmap image = BitmapFactory.decodeFile(fileName);
-				String extr = Environment.getExternalStorageDirectory()
-						.toString();
-				File mFolder = new File(extr + "/MYAPPBUILDER2");
-				if (!mFolder.exists()) {
-					mFolder.mkdir();
-				} else {
-					mFolder.delete();
-					mFolder.mkdir();
-				}
-
-				String s = "Rough.png";
-
-				File f = new File(mFolder.getAbsolutePath(), s);
-
-				filename = f.getAbsolutePath();
-				Log.d("f", filename);
-				try {
-					fos = new FileOutputStream(f);
-					image.compress(Bitmap.CompressFormat.PNG, 100, fos);
-					fos.flush();
-					fos.close();
-				} catch (FileNotFoundException e) {
-
-					e.printStackTrace();
-				} catch (Exception e) {
-
-					e.printStackTrace();
-				}
-			} else {
-				Log.d("not file exitst", "not exist");
-			}
 			Log.d("file", "file");
 		} else {
 			fileName = filePathUri.getPath();
@@ -1277,228 +1151,5 @@ public class BaseWizard extends CordovaPlugin {
 		return fileName;
 
 	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.d(Prefs.TAG, "BaseWizard onDestroy");
-		stopTranscoding();
-	}
-
-	/*
-	 * ["http:\/\/build.myappbuilder.com\/api\/elements\/create_video.json?",
-	 * "post", {"button_id":2882,"title":"ryghh",
-	 * "video":{"fileSize":35583,"fileName"
-	 * :"final.mp4","lastModifiedDate":"2014-09-24T14:45:33.000Z"
-	 * ,"type":"video\/mp4","size":35583,"name":"final.mp4"},
-	 * "description":"hvffjgg","api_key":"d1f3d280dbdd89eeacda0077e100ba67"} ]
-	 * ddddd 3
-	 */
-	String Tag = "Video_Compress", sgn = null;
-	String jsondata;
-	String post_imgpth = null;
-	public CallbackContext callbackContext;
-	public Context context;
-	public int wid = 80, hig = 80;
-
-	public boolean execute(String actiosaveImagen, JSONArray args,
-			CallbackContext callbackContext) throws JSONException {
-		this.callbackContext = callbackContext;
-		context = this.cordova.getActivity().getApplicationContext();
-		jsondata = args.toString();
-		Log.e("json", args.toString() + " ddddd " + args.length());
-		cd = new ConnectionDetector(context);
-		isInternetPresent = cd.isConnectingToInternet();
-		if (isInternetPresent) {
-			if (args != null && args.length() > 0) {
-				JSONArray arry = new JSONArray(jsondata);
-				JSONObject obj = arry.getJSONObject(2);
-				sgn = obj.getString("video");
-
-				if (obj.has("video_thumbnail")) {
-					String image = obj.getString("video_thumbnail");
-					if (image != null) {
-						Log.d("image", image);
-						if (image.contains("content") || image.contains("file")) {
-							String getString = getFileNameByUri(context,
-									Uri.parse(image));
-							String thumb = reporteds(getString);
-							video(thumb, true);
-						} else {
-							String thumb = reporteds(image);
-							video(thumb, true);
-						}
-					} else {
-						String thumb = reporteds(video_thumbpath
-								.getAbsolutePath());
-						video(thumb, true);
-						Log.d("image path32", video_thumbpath.getAbsolutePath());
-					}
-				} else {
-					String thumb = reporteds(video_thumbpath.getAbsolutePath());
-					video(thumb, true);
-					Log.d("image path33", video_thumbpath.getAbsolutePath());
-				}
-
-			} else {
-				PluginResult progressResult = new PluginResult(
-						PluginResult.Status.ERROR,
-						"parameter required or incorrect");
-				progressResult.setKeepCallback(true);
-				callbackContext.sendPluginResult(progressResult);
-			}
-
-		} else {
-			toastsettext("No Internet Connection");
-		}
-
-		return true;// super.execute(action, args, callbackContext);
-	}
-
-	public void toastsettext(String string1) {
-		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		View layout = inflater.inflate(R.layout.toast_activity,
-				(ViewGroup) ((Activity) context).findViewById(R.id.toast_rl));
-		TextView txt = (TextView) layout.findViewById(R.id.toast_txt);
-		txt.setText(string1);
-		Toast tst = new Toast(context);
-		tst.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-		tst.setDuration(Toast.LENGTH_SHORT);
-		tst.setView(layout);
-		tst.show();
-	}
-
-	private void video_posted() {
-		File files = new File(sgn);
-		// JSONObject obj = args.getJSONObject(2).getJSONObject("video");
-		String[] temp = null;// args.getString(0).split("/");
-		temp = getVideoPath(files.getName());
-		if (temp[0].equalsIgnoreCase("success")) {
-			File file = new File(temp[1]);
-			String hrSize = "";
-			long size = file.length();
-			double m = size / 1048576;
-			if (m < 32) {
-				copyLicenseAndDemoFilesFromAssetsToSDIfNeeded();
-				commandStr = "ffmpeg -y -i "
-						+ temp[1]
-						+ " -strict experimental -s 160x120 -r 25 -aspect 4:3 -vcodec mpeg4 -b 97152 -ab 48000 -ac 2 -ar 22050 /sdcard/videokit/final.mp4";
-				setWorkingFolder("/sdcard/videokit/");
-				setCommand(commandStr);
-				setOutputFilePath("/sdcard/videokit/final.mp4");
-
-				Log.i(Prefs.TAG,
-						"ffmpeg4android library version: "
-								+ Prefs.getLibraryVersionName());
-				runTranscoing();
-			} else {
-				JSONObject object = new JSONObject();
-				try {
-					object.put("statues", "Error");
-					object.put("message",
-							"file size should not greater than 30MB....");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				PluginResult progressResult = new PluginResult(
-						PluginResult.Status.ERROR, object);
-				progressResult.setKeepCallback(true);
-				callbackContext.sendPluginResult(progressResult);
-			}
-		} else {
-			PluginResult progressResult = new PluginResult(
-					PluginResult.Status.ERROR, temp[0]);
-			progressResult.setKeepCallback(true);
-			callbackContext.sendPluginResult(progressResult);
-		}
-	}
-
-	private void video(String thumb, boolean boo_img) {
-		AsyncHttpClient client = new AsyncHttpClient();
-		RequestParams params = new RequestParams();
-		params.put("api_key", "d4b2e8f5473bd5023797436ce9556620");
-		params.put("id", "2225");
-		try {
-			params.put("image", new File(thumb));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		;
-		client.addHeader("Accept", "appliction/json");
-		if (boo_img) {
-			client.post(
-					"http://build.myappbuilder.com/api/elements/images.json?",
-					params, response_Image);
-		} else {
-			client.post(
-					"http://build.myappbuilder.com/api/elements/images.json?",
-					params, response_Frame);
-		}
-
-	}
-
-	public AsyncHttpResponseHandler response_Image = new AsyncHttpResponseHandler() {
-		@Override
-		public void onFinish() {
-			super.onFinish();
-			video_posted();
-			Log.d("response_image", " response_image finish");
-		}
-
-		@Override
-		public void onSuccess(String arg0) {
-			super.onSuccess(arg0);
-			if (arg0 != null) {
-				Log.e("response_image", arg0);
-				try {
-					JSONObject obj = new JSONObject(arg0);
-					Constant.img_url = obj.getString("url");
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-		public void onFailure(Throwable arg0, String arg1) {
-			super.onFailure(arg0, arg1);
-			if (arg1 != null) {
-				Log.d("response_image", arg1);
-
-			}
-		};
-
-	};
-
-	public AsyncHttpResponseHandler response_Frame = new AsyncHttpResponseHandler() {
-		@Override
-		public void onFinish() {
-			super.onFinish();
-			Log.d("response_Frame", " response_image finish");
-			video_posted();
-		}
-
-		@Override
-		public void onSuccess(String arg0) {
-			super.onSuccess(arg0);
-			if (arg0 != null) {
-				Log.e("response_image", arg0);
-				try {
-					JSONObject obj = new JSONObject(arg0);
-					Constant.frm_url = obj.getString("url");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		public void onFailure(Throwable arg0, String arg1) {
-			super.onFailure(arg0, arg1);
-			if (arg1 != null) {
-				Log.d("response_Frame", arg1);
-			}
-		};
-
-	};
 
 }
